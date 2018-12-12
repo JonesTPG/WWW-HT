@@ -12,8 +12,9 @@ var session = require('express-session');
 var mongoose = require('mongoose');
 
 
+
 //var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+
 
 var configDB = require('./config/database');
 
@@ -38,19 +39,20 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/users', usersRouter);
+
 
 
 
 // required for passport
-app.use(session({ secret: 'LUTWEB2K18' })); // session secret
+app.use(session({ secret: 'LUTWEB2K18' })); // session-salaisuus, jonka avulla token luodaan
 app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
-app.use(flash()); // use connect-flash for flash messages stored in session
-// pass passport for configuration
-require('./config/passport')(passport);
+app.use(passport.session()); // pysyvä kirjautuminen
+app.use(flash()); // flash-message -tuki, ei tarpeellinen tässä sovelluksessa
 
-require('./routes/index.js')(app, passport); // load our routes and pass in our app and fully configured passport
+
+require('./config/passport')(passport); // configuroidaan passport
+
+require('./routes/index.js')(app, passport); // määritellään auth-routet
 
 app.use(function (req, res, next) {
   // Website you wish to allow to connect

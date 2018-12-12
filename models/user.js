@@ -1,3 +1,4 @@
+'use strict'
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
 
@@ -7,6 +8,9 @@ var userSchema = mongoose.Schema({
         username     : String,
         email        : String,
         password     : String,
+        age          : String,
+        created      : Date,
+        records      : []
     }
 
 });

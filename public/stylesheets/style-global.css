@@ -1,0 +1,15 @@
+
+body {
+
+	font-family: 'Patua One', cursive;
+	position:relative;
+	background-color:rgba(40,57,101,.9);
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+	
+}
+
+main {
+  flex: 1 0 auto;
+}

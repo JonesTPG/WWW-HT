@@ -6,9 +6,10 @@
     <meta charset="utf-8">
     <title>Quiz-sovellus!</title>
     <link rel="stylesheet" href="./stylesheets/style-login.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
   </head>
   <body>
-   
+   <div id="app">
     <div class="header">
         <div class="header-title">
         <h3>Quiz-sovellus</h3>
@@ -18,49 +19,67 @@
 
     <div class="login-wrap">
         <div class="login-html">
+            <p v-if="signupfailed">Käyttäjänimi on varattu.</p>
             <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Kirjaudu</label>
             <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Rekisteröidy</label>
             <div class="login-form">
-                <form action="/login" method="post">
+                <form id="app" novalidate="true" action="/login" method="post">
                 <div class="sign-in-htm">
                     <div class="group">
                         <label for="user" class="label">Käyttäjänimi</label>
-                        <input id="user" type="text" class="input" name="username">
+                        <input id="user" type="text" class="input" name="username" v-model="name">
                     </div>
                     <div class="group">
                         <label for="pass" class="label">Salasana</label>
-                        <input id="pass" type="password" class="input" name="password">
+                        <input id="pass" type="password" class="input" name="password" v-model="password">
                     </div>
                     
                     <div class="group">
                         <button type="submit" class="button">Kirjaudu</button>
                     </div>
                 </form>
+                <p v-if="loginfailed">Kirjautuminen epäonnistui.</p>
                     <div class="hr"></div>
+                  
                    
                 </div>
+
+
+
+
+
+
                 <div class="sign-up-htm">
-                   <form action="/signup" method="post">
+                   <form @submit="checkForm" id="app" novalidate="true" action="/signup" method="post">
                     <div class="group">
                         <label for="user" class="label">Käyttäjänimi</label>
-                        <input id="user" type="text" class="input" name="username">
+                        <input id="user" type="text" class="input" name="username" v-model="name">
                     </div>
                     <div class="group">
                         <label for="pass" class="label">Salasana</label>
-                        <input id="pass" type="password" class="input" name="password">
+                        <input id="pass" type="password" class="input" name="password" v-model="password">
                     </div>
                     <div class="group">
                         <label for="pass" class="label">Toista salasana</label>
-                        <input id="pass" type="password" class="input" data-type="password">
+                        <input id="pass" type="password" class="input" data-type="password" v-model="password2">
                     </div>
-                    <div class="group">
+                    <!-- <div class="group">
                         <label for="pass" class="label">Sähköposti</label>
-                        <input id="pass" type="text" class="input">
-                    </div>
+                        <input id="pass" type="text" class="input" name="email" v-model="email">
+                    </div> -->
                     <div class="group">
                         <button type="submit" class="button">Rekisteröidy</button>
                     </div>
                     </form>
+
+                    <p v-if="errors.length">
+                            <b>Korjaa seuraavat virheet:</b>
+                            <ul>
+                              <li v-for="error in errors">{{ error }}</li>
+                            </ul>
+                    </p>
+
+
                     <div class="hr"></div>
                     <div class="foot-lnk">
                         <label for="tab-1">Oletko jo rekisteröitynyt?</a>
@@ -70,8 +89,8 @@
         </div>
     </div>
     
-   
-    
+</div>
+    <script src="./javascripts/index.js"></script>
 
   </body>
 </html>
