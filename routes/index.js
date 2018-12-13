@@ -40,7 +40,7 @@ app.get('/userdata', isLoggedIn, (req, res, next) => {
     return res.json(JSON.stringify(user.local));
   })
   
-})
+});
 
 
 app.get('/logout', function(req, res) {

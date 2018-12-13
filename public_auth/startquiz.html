@@ -2,7 +2,7 @@
 <html>
 <head>
        
-<link rel="stylesheet" href="./stylesheets/style-global.css">       
+<link rel="stylesheet" href="../stylesheets/style-global.css">       
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
@@ -25,24 +25,37 @@
             <div class="row">
 
                 <div class="col s12">
-                    <h2 class="white-text center">Omat tiedot:</h2>    
+                    <h2 class="white-text center">Aloita uusi Quiz</h2>    
                 </div>
             </div>
 
             <div class="row">
-                    <div class="col s12 l6 center">            
-                                  
-                     <p class="white-text"> Käyttäjänimi: {{username}} </p> 
-                     <p class="white-text"> Email: {{email}} </p>
-                     <p class="white-text"> Ikä: {{age}} </p>                     
+                    <div class="col s12 l6 center"> 
+                        <h4 class="white-text center">Valitse genre</h2>          
+                        <ul class="collection">       
+                        <genre-item v-for="i in genreList"
+                               v-bind:key="i.id"
+                               v-bind:item="i"></genre-item>
+                        </ul>
                      
                      </div>
+
+                     <div class="col s12 l6 center"> 
+                            <h4 class="white-text center">Kysymysten määrä:</h2>          
+                            <question-amount></question-amount>
+                         </div>
             </div>
 
-            <div class="col l6 s12 center">
-                    <a href="/profile" class="waves-effect blue darken-1 btn">Etusivulle</a>
+            <div class="col l6 center">
+                    
+                    <!-- <button v-on:click="startQuiz" class="waves-effect blue darken-1 btn">Aloita</button> -->
                        
             </div>
+
+           
+                   
+                       
+            
 
            
             </div>
@@ -81,6 +94,6 @@
 </body>
 
 
-<script src="./javascripts/edit-profile.js"></script>
+<script src="../javascripts/startquiz.js"></script>
 
 </html>

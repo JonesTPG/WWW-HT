@@ -1,0 +1,108 @@
+#!/usr/bin/env node
+
+//tämä skripti populoi databasen aloitusdatalla, eli tämä ajetaan ennenkuin ohjelmaa ruvetaan käyttämään vaikkapa
+//dockerin avulla
+
+var async = require('async')
+var User = require('../models/user')
+var QuizItem = require('../models/quizItem')
+var Genre = require('../models/genre')
+
+
+var mongoose = require('mongoose');
+var mongoURL = 'mongodb://localhost:27017/HT';
+mongoose.connect(mongoURL);
+mongoose.Promise = global.Promise;
+var db = mongoose.connection;
+mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+
+var users = []
+var quizitems = []
+var genres = []
+
+
+function genreCreate(name, questionAmount, imageUrl, cb) {
+    genredetail = {name:name , questionAmount: questionAmount, 
+                    imageUrl: imageUrl }
+    // if (imageUrl != false) authordetail.date_of_birth = imageUrl
+    // if (d_death != false) authordetail.date_of_death = d_death
+    
+    var genre = new Genre(genredetail);
+         
+    genre.save(function (err) {
+      if (err) {
+        cb(err, null)
+        return
+      }
+      console.log('New Genre: ' + genre);
+      genres.push(genre)
+      cb(null, genre)
+    }  );
+  }
+
+  function quizItemCreate(question, answer, imageUrl, hint, difficulty, genre, cb) {
+    quizItemDetail = {question:question , answer: answer, hint: hint,
+                    imageUrl: imageUrl, difficulty:difficulty, genre:genre }
+    // if (imageUrl != false) authordetail.date_of_birth = imageUrl
+    // if (d_death != false) authordetail.date_of_death = d_death
+    
+    var quizitem = new QuizItem(quizItemDetail);
+         
+    quizitem.save(function (err) {
+      if (err) {
+        cb(err, null)
+        return
+      }
+      console.log('New quizitem: ' + quizitem);
+      quizitems.push(quizitem)
+      cb(null, quizitem)
+    }  );
+  }
+
+
+
+  function createGenres(cb) {
+      async.parallel([
+          function(callback) {
+                genreCreate('Ohjelmointi', 15, '../images/program.jpg', callback);
+          },
+          function(callback) {
+                genreCreate('Matematiikka', 22, '../images/math.jpg', callback);
+        },
+          function(callback) {
+                genreCreate('Elokuvat', 15, '../images/movie.jpg', callback);
+        },  
+      ],
+      cb);
+  }
+
+  function createQuizItems(cb) {
+    async.parallel([
+        function(callback) {
+              quizItemCreate('Paljon on 1+1', "2", "../images/quiz/default.jpg",
+               "suattaapi olla 2", "easy", genres[1], callback);
+        },
+        function(callback) {
+            quizItemCreate('Paljon on 2+3', "5", "../images/quiz/default.jpg",
+             "suattaapi olla 5", "medium", genres[1], callback);
+        },
+      
+    ],
+    cb);
+}
+
+  async.series([
+      createGenres,
+      createQuizItems
+  ],
+  function(err, results) {
+      if (err) {
+          console.log("error" + err);
+      }
+      else {
+          console.log("kaikki lisätty onnistuneesti.");
+      }
+
+      mongoose.connection.close();
+  });

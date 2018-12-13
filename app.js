@@ -13,7 +13,7 @@ var mongoose = require('mongoose');
 
 
 
-//var indexRouter = require('./routes/index');
+var quizRouter = require('./routes/quiz');
 
 
 var configDB = require('./config/database');
@@ -53,6 +53,8 @@ app.use(flash()); // flash-message -tuki, ei tarpeellinen tässä sovelluksessa
 require('./config/passport')(passport); // configuroidaan passport
 
 require('./routes/index.js')(app, passport); // määritellään auth-routet
+
+app.use('/quiz', quizRouter);
 
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
