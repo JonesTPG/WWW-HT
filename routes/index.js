@@ -6,7 +6,7 @@ module.exports = function(app, passport) {
 
 //kirjautumissivu
 app.get('/', function(req, res, next) {
-  console.log("es");
+  
 
   res.sendFile(path.join(__dirname, '../public', 'index.html'));
 });

@@ -9,7 +9,7 @@ var Result = require('../models/result');
 
 
 
-router.get('/', isLoggedIn, function (req, res) {
+router.get('/', function (req, res) {
 
     Result.find({})
     .lean()
@@ -19,7 +19,7 @@ router.get('/', isLoggedIn, function (req, res) {
     
 });
 
-router.get('/all', isLoggedIn, function (req, res) {
+router.get('/all', function (req, res) {
     res.sendFile(path.join(__dirname, '../public_data', 'data.html'));
 });
 
