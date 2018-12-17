@@ -10,7 +10,9 @@ var app = new Vue({
         selectedAmount: "",
         selectedGenre: "",
         rows: [],
-        allrows: []
+        allrows: [],
+        genreList: [],
+        genreNames: []
       
     },
 
@@ -59,6 +61,17 @@ var app = new Vue({
                         return -1;
                     }
                     return 0;
+                });
+
+                axios.get('http://localhost:3000/quiz/genres').then((response)=> {
+                    var data = JSON.parse(response.data);
+                    
+                    
+                    this.genreList = data;
+                    // for (var i=0; i<this.genreList.length; i++) {
+                    //     this.genreNames.push({name: this.genreList[i].name});
+                    // }
+                    
                 });
                 
         });
@@ -158,7 +171,7 @@ var app = new Vue({
             doc.text("Quiz App 2018.", 80, y+15);
 
 
-            doc.save('a4.pdf')
+            doc.save('results.pdf');
         }
 
     }

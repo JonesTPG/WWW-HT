@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+       
+<link rel="stylesheet" href="../stylesheets/style-global.css">       
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+ <!-- Compiled and minified CSS -->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+ <!-- Compiled and minified JavaScript -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+ <!-- SEO ALKAA -->
+
+
+ <title>Quiz-App: Luo uusi Quiz</title>
+ <meta name="description" content="QuizApp.fi | Valitse genre ja kysymyksien määrä, ja luo uusi loistava quiz!"> 
+ <meta name="og:title" property="og:title" content="Kilpaile kavereidesi kanssa uudessa sovelluksessa!"> 
+ <meta property="og:description" 
+content="QuizApp.fi: Sovellus, jolla voit haastaa itsesi ja 
+kaverisi kilpailuun. Rekisteröidy jo tänään, se on ilmaista!" />
+ <meta property="og:url" content="http://localhost:3000/images/quiz/default.jpg/" />
+ <meta name="robots" content="index, follow"> 
+
+ <!-- SEO LOPPUU -->
+
+</head>
+
+
+<body>
+    <main>
+
+    <div class="wrapper">
+
+        <div id="app">
+      
+            <div class="container">
+            <div class="row">
+
+                <div class="col s12">
+                    <h2 class="white-text center">Luo uusi Quiz</h2>    
+                </div>
+            </div>
+
+            <div class="row">
+                    <div class="col s12 l6 center"> 
+                       <h3 class="white-text">Luo uusi genre</h3>
+
+                       <input class="col s12 l6" v-model="newGenre" type="text" name="genre" value="uusi genre...">
+                       <button v-on:click="createGenre" class="waves-effect blue darken-1 btn">Luo genre</button>
+                       <br><br><br>
+                       <p class="white-text">Kun painat "luo genre", sivu latautuu uudelleen ja luomasi genre
+                           näkyy oikealla listassa.
+                       </p>
+                     
+                       <p class="white-text">{{infoText}}</p>
+                     
+                     </div>
+
+                     <div class="col s12 l6 center"> 
+                            <h3 class="white-text">Laajenna vanhaa genreä</h3>
+
+                            <ul class="collection">       
+                                    <genre-item v-for="i in genreList"
+                                           v-bind:key="i.id"
+                                           v-bind:item="i"></genre-item>
+                                    </ul>
+                         </div>
+            </div>
+
+            <div class="center">
+                    <button v-on:click="proceed" class="waves-effect blue darken-1 btn">Jatka kysymysten luontiin</button>
+            </div>
+
+            <div class="col l6 center">
+                    
+                   
+                       
+            </div>
+
+           
+                   
+                       
+            
+
+           
+            </div>
+        </div>
+
+    </div>
+
+        </main>
+        <footer class="page-footer blue-grey">
+                <div class="container">
+                  <div class="row">
+                    <div class="col l6 s12">
+                      <h5 class="white-text">WWW-Sovellukset harjoitustyö</h5>
+                      <p class="grey-text text-lighten-4">Moderni web-applikaatio MEVN-stackilla.</p>
+                    </div>
+
+                    <div class="col l6 s12">
+                        <a href="/logout" class="waves-effect blue darken-1 btn">Kirjaudu ulos</a>
+                           
+                          </div>
+                   
+                  </div>
+                </div>
+                <div class="footer-copyright">
+                  <div class="container">
+                  © 2018 Joonas Ryynänen
+                  
+                  </div>
+                </div>
+              </footer>
+                  
+
+
+    </div>
+
+</body>
+
+
+<script src="../javascripts/createquiz.js"></script>
+
+</html>

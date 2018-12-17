@@ -21,14 +21,14 @@ Vue.component('resultItem', {
     <li>
         <div class="collapsible-header blue-grey white-text">
         <i class="material-icons">arrow_downward</i>
-            Kysymys numero {{item.id+1}}: {{item.question}} kpl 
+            Kysymys numero {{item.id+1}}: {{item.question}} 
         
         </div>
             
         <div class="collapsible-body white-text">
 
             <span>Vastasit: {{item.userAnswer}}</span>
-                <p>Oikea vastaus: {{item.rightAnswer}} kpl <br>
+                <p>Oikea vastaus: {{item.rightAnswer}} <br>
                 </p> <br>
         
         </div>

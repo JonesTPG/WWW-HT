@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+       
+<link rel="stylesheet" href="../stylesheets/style-global.css">       
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+ <!-- Compiled and minified CSS -->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+ <!-- Compiled and minified JavaScript -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+ <!-- SEO ALKAA -->
+
+
+ <title>Quiz-App: Luo kysymyksiä</title>
+ <meta name="description" content="QuizApp.fi | Tee kysymyksiä genreen, jotta sitä voi pelata!"> 
+ <meta name="og:title" property="og:title" content="Kilpaile kavereidesi kanssa uudessa sovelluksessa!"> 
+ <meta property="og:description" 
+content="QuizApp.fi: Sovellus, jolla voit haastaa itsesi ja 
+kaverisi kilpailuun. Rekisteröidy jo tänään, se on ilmaista!" />
+ <meta property="og:url" content="http://localhost:3000/images/quiz/default.jpg/" />
+ <meta name="robots" content="index, follow"> 
+
+ <!-- SEO LOPPUU -->
+
+</head>
+
+
+<body>
+    <main>
+
+    <div class="wrapper">
+
+        <div id="app">
+      
+            <div class="container">
+            <div class="row">
+
+                <div class="col s12">
+                    <h2 class="white-text center">Tee kysymyksiä</h2>    
+                </div>
+            </div>
+
+            <div class="row">
+                    <div class="center col l9">
+                            
+                            
+                            <div style="width: 100px; margin-left:40%;">
+                                    <h4 class="white-text">Kysymys:</h4>
+                                    <input v-model="question">
+
+                                    <h4 class="white-text">Vastaus:</h4>
+                                    <input v-model="answer">
+
+                                    <h4 class="white-text">Vihje:</h4>
+                                    <input v-model="hint">
+                            </div>
+                            
+                            <button id="next" v-on:click="saveAndNext" class="waves-effect blue darken-1 btn">Seuraava</button>
+                            
+                             
+                             
+                            <button v-on:click="submitQuestions" class="waves-effect blue darken-1 btn">Valmis</button>
+
+                            <p class="white-text">{{infoText}}</p>
+                                 
+                        
+
+                           
+                    </div>
+            </div>
+
+            <div class="col l6 center">
+                    
+                   
+                       
+            </div>
+
+           
+                   
+                       
+            
+
+           
+            </div>
+        </div>
+
+    </div>
+
+        </main>
+        <footer class="page-footer blue-grey">
+                <div class="container">
+                  <div class="row">
+                    <div class="col l6 s12">
+                      <h5 class="white-text">WWW-Sovellukset harjoitustyö</h5>
+                      <p class="grey-text text-lighten-4">Moderni web-applikaatio MEVN-stackilla.</p>
+                    </div>
+
+                    <div class="col l6 s12">
+                        <a href="/logout" class="waves-effect blue darken-1 btn">Kirjaudu ulos</a>
+                           
+                          </div>
+                   
+                  </div>
+                </div>
+                <div class="footer-copyright">
+                  <div class="container">
+                  © 2018 Joonas Ryynänen
+                  
+                  </div>
+                </div>
+              </footer>
+                  
+
+
+    </div>
+
+</body>
+
+
+<script src="../javascripts/createquestions.js"></script>
+
+</html>
