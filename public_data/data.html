@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="../stylesheets/style-global.css">       
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+<script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
 
 
  <!-- Compiled and minified CSS -->
@@ -12,6 +13,22 @@
 
  <!-- Compiled and minified JavaScript -->
  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+ <!-- SEO ALKAA -->
+
+
+ <title>Quiz-App: Tilastot</title>
+ <meta name="description" content="QuizApp.fi | Täällä näet kaikkien käyttäjien tilastot, voit suodattaa suorituksia ja vertailla
+ tuloksiasi!"> 
+ <meta name="og:title" property="og:title" content="Kilpaile kavereidesi kanssa uudessa sovelluksessa!"> 
+ <meta property="og:description" 
+content="QuizApp.fi: Sovellus, jolla voit haastaa itsesi ja 
+kaverisi kilpailuun. Rekisteröidy jo tänään, se on ilmaista!" />
+ <meta property="og:url" content="http://localhost:3000/images/quiz/default.jpg/" />
+ <meta name="robots" content="index, follow"> 
+
+ <!-- SEO LOPPUU -->
 </head>
 
 
@@ -43,10 +60,12 @@
                         </select>
                         <label>Genre:</label>
                  </div>
+                 <div class="col l3 white-text">
+                        <button style="margin-top: 20px;" v-on:click="update" class="waves-effect blue darken-1 btn">Päivitä</button>
+                        <a style="margin-top: 20px;" href="/profile" class="waves-effect blue darken-1 btn">Takaisin</a>
+                        <button style="margin-top: 20px;" v-on:click="genPDF" class="waves-effect blue darken-1 btn">Lataa tulokset (pdf)</button>
 
-                 <button style="margin-top: 20px;" v-on:click="update" class="waves-effect blue darken-1 btn">Päivitä</button>
-                 <a style="margin-top: 20px;" href="/profile" class="waves-effect blue darken-1 btn">Takaisin</a>
-                           
+                 </div>
 
                 </div>
 

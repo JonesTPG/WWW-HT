@@ -9,8 +9,8 @@ var app = new Vue({
         infoText: null,
         selectedAmount: "",
         selectedGenre: "",
-        rows: [{}],
-        allrows: [{}]
+        rows: [],
+        allrows: []
       
     },
 
@@ -107,7 +107,7 @@ var app = new Vue({
             }
 
             if (this.selectedAmount != "" && this.selectedGenre != "") {
-                var newRows = [{}];
+                var newRows = [];
                 for (var i=0; i<this.allrows.length; i++) {
                     if (this.allrows[i].questions == this.selectedAmount 
                         && this.allrows[i].genre == this.selectedGenre) {
@@ -123,6 +123,42 @@ var app = new Vue({
            
 
            
+        },
+
+        genPDF() {
+            var doc = new jsPDF()
+
+            doc.text('Tulokset ' + new Date().toLocaleDateString('fi-FI'), 80, 10)
+            doc.text('Valitut suodattimet:', 20, 20);
+            doc.text('Genre: '+this.selectedGenre, 30, 30);
+            doc.text('Kysymysten määrä: ' + this.selectedAmount, 30, 40)
+            doc.line(0,45,220,45);
+
+            doc.text('Käyttäjä              Päivämäärä              Kysymyksiä           Genre           Tulos', 0, 50);
+            var y = 55;
+            for (var i=0; i<this.rows.length; i++) {
+                var u = this.rows[i].user;
+                var g = this.rows[i].genre;
+                var a = this.rows[i].questions;
+                var s = this.rows[i].score;
+                var d = this.rows[i].date;
+
+             
+                doc.text(u, 0, y);
+                doc.text(d, 40, y);
+                doc.text(a.toString(), 110, y);
+                doc.text(g, 130, y);
+                doc.text(s.toString(), 170, y);
+
+                //doc.text(u+'            '+d+'           '+a+'           '+g+'           '+s, 0, y);
+                y = y+5;
+            }
+
+            doc.line(0,y,220,y);
+            doc.text("Quiz App 2018.", 80, y+15);
+
+
+            doc.save('a4.pdf')
         }
 
     }

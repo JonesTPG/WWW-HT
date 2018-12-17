@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 const request = require('supertest');
 const localmongoose = require('mongoose');
+const config = require('../config/database');
 
 localmongoose.Promise = Promise;
 
@@ -8,15 +9,15 @@ const app = require('../app');
 const User = require('../models/user.js');
 
 
-describe('Testataan MongoDB-yhteys', () => {
-    test('Testataan yhteys', (done) => {
-      localmongoose.connect('mongodb://localhost:27017').then(() => {
-        expect(localmongoose.connection.readyState).toBe(1);
-      });
-      localmongoose.disconnect();
-      done(); // eslint-disable-line no-undef
-    });
-  });
+// describe('Testataan MongoDB-yhteys', () => {
+//     test('Testataan yhteys', (done) => {
+//       localmongoose.connect(config.url).then(() => {
+//         expect(localmongoose.connection.readyState).toBe(1);
+//       });
+//       localmongoose.disconnect();
+//       done(); // eslint-disable-line no-undef
+//     });
+//   });
 
 
 describe('Testataan kirjautumissivu', () => {
@@ -28,8 +29,7 @@ describe('Testataan kirjautumissivu', () => {
         done();
       });
     });
-    // An exercise to the reader: How to validate the JSON structure?
-    // See https://www.npmjs.com/package/supertest and promises
+    
   });
 
   describe('Testataan tulossivu', () => {
@@ -41,7 +41,6 @@ describe('Testataan kirjautumissivu', () => {
         done();
       });
     });
-    // An exercise to the reader: How to validate the JSON structure?
-    // See https://www.npmjs.com/package/supertest and promises
+  
   });
 
