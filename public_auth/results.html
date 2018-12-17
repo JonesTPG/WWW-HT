@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-       
+
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">  
 <link rel="stylesheet" href="../stylesheets/style-global.css">       
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
 
@@ -22,51 +24,43 @@
        
             <div class="row">
                 <div class="col s12">
-                        <h2 class="white-text center">Quiz käynnisssä</h2>    
+                        <h2 class="white-text center">Tulokset</h2>    
                 </div>
 
 
             </div>
             <!-- VUE ALKAA -->
             <div id="app">
-                
-                <p class="white-text center">Kysymys {{qNumber+1}}/{{amount}}</p>
-                <div class="row">
 
-                    <div class="center col l9">
-                            <img :src="cur.imgUrl" alt="quizimage" height="300px" width="300px"/>
-                            <p class="white-text center">{{cur.question}}</p>
-                            <div style="width: 100px; margin-left:40%;">
-                                    <input v-model="answer" placeholder="edit me">
-                            </div>
-                            <!-- <button v-on:click="saveAnswerAndPrevious" class="waves-effect blue darken-1 btn">Edellinen</button> -->
-                            <button id="next" v-on:click="saveAnswerAndNext" class="waves-effect blue darken-1 btn">Seuraava</button>
-                            <div v-if="ready">
-                             
-                             
-                            <button v-on:click="submitQuiz" class="waves-effect blue darken-1 btn">Valmis</button>
-                                 
-                        </div>
+                <div class="row">
+                    <div class="col l3">
+                            <p class="white-text">Genre: <br>{{genre}}</p>
                     </div>
                     <div class="col l3">
-                            
-                            <p class="white-text" id ="timer">{{timer}}</p>
-                            <button v-on:click="showhint" class="waves-effect blue darken-1 btn">Vihje</button>
-                            <p v-if="showHint" class="white-text" id ="timer">{{cur.hint}}</p>
-                            <br><br><br>
-                           
-                             
-                       
-                            <p class="white-text" id ="timer">{{infoText}}</p>
+                            <p class="white-text">Kysymyksiä:<br> {{amount}}</p>
                     </div>
-
-                    <div class="col l9">
-                           
+                    <div class="col l3">
+                            <p class="white-text">Oikein: <br>{{right}}/{{amount}} </p>
                     </div>
-                    
+                    <div class="col l3">
+                            <p class="white-text">Pisteet: <br>{{score}}</p>
+                    </div>
                 </div>
 
-
+                
+                
+               
+              
+                
+                <h3 class="white-text center"> Lisätietoja: </h3>
+                <ul class="collapsible">    
+                    <result-item v-for="i in data"
+                                v-bind:key="i.id"
+                                v-bind:item="i"></result-item>
+                </ul>
+                <div class="center">
+                    <a href="/profile" class="waves-effect blue darken-1 btn">Valmis</a>
+                </div>
             </div>
             <!-- VUE LOPPUU -->
     </div>
@@ -102,6 +96,6 @@
 </body>
 
 
-<script src="../javascripts/quiz.js"></script>
+<script src="../javascripts/results.js"></script>
 
 </html>

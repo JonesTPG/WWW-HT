@@ -14,6 +14,7 @@ var mongoose = require('mongoose');
 
 
 var quizRouter = require('./routes/quiz');
+var dataRouter = require('./routes/data');
 
 
 var configDB = require('./config/database');
@@ -55,6 +56,7 @@ require('./config/passport')(passport); // configuroidaan passport
 require('./routes/index.js')(app, passport); // määritellään auth-routet
 
 app.use('/quiz', quizRouter);
+app.use('/data', dataRouter);
 
 app.use(function (req, res, next) {
   // Website you wish to allow to connect

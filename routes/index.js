@@ -24,13 +24,37 @@ app.post('/signup', passport.authenticate('local-signup', {
 }));
 
 app.get('/profile', isLoggedIn, (req, res, next) => { //huom. isLoggedIn middleware
-  console.log(req.user);
+  
   res.sendFile(path.join(__dirname, '../public_auth', 'profile.html'));
 });
 
 app.get('/edit-profile', isLoggedIn, (req, res, next) => { //huom. isLoggedIn middleware
   
   res.sendFile(path.join(__dirname, '../public_auth', 'edit-profile.html'));
+});
+
+app.post('/update-profile', isLoggedIn, (req, res) => {
+
+  var age = req.body.age;
+  var email = req.body.email;
+
+  console.log(age+email);
+  console.log(req.user.local.username);
+  User.findOne( {'local.username': req.user.local.username}, function (err, doc) {
+    
+    doc.local.email = email;
+    doc.local.age = age;
+    doc.save(function (err) {
+      if (err) {
+        console.log(err);
+      }
+
+      res.status(200).send();
+    });
+  } );
+    
+
+  
 });
 
 app.get('/userdata', isLoggedIn, (req, res, next) => {

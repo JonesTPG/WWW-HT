@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+       
+<link rel="stylesheet" href="../stylesheets/style-global.css">       
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+
+
+ <!-- Compiled and minified CSS -->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+ <!-- Compiled and minified JavaScript -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+
+
+<body>
+    <main>
+
+    <div class="wrapper">
+
+        <h1 class="white-text center">Tulokset</h1> 
+
+        <div id="app">
+            <div class="row">
+                <div class="input-field col l2 white-text">
+                        <select v-model="selectedAmount" class="white-text">
+                          <option value="" selected>Valitse kysymysten määrä</option>
+                          <option value="3">kolme</option>
+                          <option value="5">viisi</option>
+                          <option value="10">kymmenen</option>
+                        </select>
+                        <label>Kysymysten määrä:</label>
+                 </div>
+
+                 <div class="input-field col l2 white-text">
+                        <select v-model="selectedGenre" class="white-text">
+                          <option value="" selected>Valitse genre</option>
+                          <option value="Matematiikka">Matematiikka</option>
+                          <option value="Ohjelmointi">Ohjelmointi</option>
+                          <option value="Elokuvat">Elokuvat</option>
+                        </select>
+                        <label>Genre:</label>
+                 </div>
+
+                 <button style="margin-top: 20px;" v-on:click="update" class="waves-effect blue darken-1 btn">Päivitä</button>
+                 <a style="margin-top: 20px;" href="/profile" class="waves-effect blue darken-1 btn">Takaisin</a>
+                           
+
+                </div>
+
+                <p class="white-text">{{infoText}}</p>
+                      <br><br><br>
+            
+      <table class="white-text">
+            <thead>
+              <tr>
+                  <th>Käyttäjä</th>
+                  
+                  <th>Päivämäärä</th>
+                  <th>Kysymyksiä</th>
+                  <th>Genre</th>
+                  <th>Tulos</th>
+              </tr>
+            </thead>
+    
+            <tbody>
+
+            <tr v-for="row in rows">
+                 <td>{{row.user}}</td>
+                 <td>{{row.date}}</td>
+                 <td>{{row.questions}}</td>
+                 <td>{{row.genre}}</td>
+                 <td>{{row.score}}</td>
+            </tr>
+
+
+              <!-- <tr>
+                <td>Alvin</td>
+                <td>Eclair</td>
+                <td>$0.87</td>
+              </tr>
+              <tr>
+                <td>Alan</td>
+                <td>Jellybean</td>
+                <td>$3.76</td>
+              </tr>
+              <tr>
+                <td>Jonathan</td>
+                <td>Lollipop</td>
+                <td>$7.00</td>
+              </tr> -->
+            </tbody>
+          </table>
+                
+          
+                          
+        </div>
+
+
+
+    </div>
+
+        </main>
+        <footer class="page-footer blue-grey">
+                <div class="container">
+                  <div class="row">
+                    <div class="col l6 s12">
+                      <h5 class="white-text">WWW-Sovellukset harjoitustyö</h5>
+                      <p class="grey-text text-lighten-4">Moderni web-applikaatio MEVN-stackilla.</p>
+                    </div>
+
+                    <div class="col l6 s12">
+                        <a href="/logout" class="waves-effect blue darken-1 btn">Kirjaudu ulos</a>
+                           
+                          </div>
+                   
+                  </div>
+                </div>
+                <div class="footer-copyright">
+                  <div class="container">
+                  © 2018 Joonas Ryynänen
+                  
+                  </div>
+                </div>
+              </footer>
+                  
+
+
+    </div>
+
+</body>
+<script src="../javascripts/data.js"></script>
+
+
+</html>

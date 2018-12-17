@@ -31,12 +31,24 @@
 
             <div class="row">
                     <div class="col s12 l6 center">            
-                                  
-                     <p class="white-text"> Käyttäjänimi: {{username}} </p> 
-                     <p class="white-text"> Email: {{email}} </p>
-                     <p class="white-text"> Ikä: {{age}} </p>                     
-                     
+                    <ul class="collection">            
+                     <li class="white-text collection-item avatar blue-grey"> Käyttäjänimi: {{username}} </li> 
+                     <li class="white-text collection-item avatar blue-grey"> Email: {{email}} </li>
+                     <li class="white-text collection-item avatar blue-grey"> Ikä: {{age}} </li>                     
+                     </ul>
                      </div>
+
+                     <div class="white-text s6 l6 center">
+                            
+                                Vaihda email:<br>
+                                <input class="col s12 l6" v-model="email" type="text" name="email" value="uusi email..."><br>
+                                Vaihda ikä:<br>
+                                <input class="col s12 l6" v-model.number="age" type="text" name="age" value="uusi ikä..."><br><br>
+                                <button v-on:click="postForm" class="waves-effect blue darken-1 btn white-text">Vaihda</button>
+                                   
+                    </div>
+
+                    <p class="white-text">{{infoText}}</p>
             </div>
 
             <div class="col l6 s12 center">

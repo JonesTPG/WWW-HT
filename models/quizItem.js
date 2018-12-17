@@ -9,7 +9,8 @@ var quizItemSchema = new Schema({
         hint         : String,
         imageUrl     : String,
         difficulty   : String,
-        genre        : { type: Schema.Types.ObjectId, ref: 'genre' }
+        genre        : { type: Schema.Types.ObjectId, ref: 'genre' },
+        genreName    : String
     
 
 });
