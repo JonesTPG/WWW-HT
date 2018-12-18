@@ -39,19 +39,37 @@ router.post('/get-questions', function (req, res) {
     var count = data.length;
     
     
-    
+    data = shuffle(data);
 
-    for (var i=0; i<amount; i++) {      //otetaan amountin verran kysymyksiä, ja randomisoidaan kysymykset
-        var random = Math.floor(Math.random()*count);
-        dataList[i] = data[random]
+    if (count<amount) {
+        console.log("error");
+        var error  = true;
+        res.json(JSON.stringify(error));
+
     }
-        
-    for (let i=0; i<dataList.length; i++) {
-            dataList[i].answer = null;          //poistetaan vastaukset fronttiin lähtevästä datasta.
-    }
+
+    else {
+   
+
+        for (var i=0; i<count; i++) {      //otetaan amountin verran kysymyksiä, ja randomisoidaan kysymykset
+            //var random = Math.floor(Math.random()*count);
+            dataList[i] = data[i];
+        }
+
+        // for (var i=count; i<amount; i++) {
+        //     var random = Math.floor(Math.random()*count);
+        //     dataList[i] = data[random];
+        // }
+            
+        for (let i=0; i<dataList.length; i++) {
+                dataList[i].option3 = dataList[i].answer;
+                dataList[i].answer = null;          //vaihdetaan vastaus-objektin nimi.
+        }
 
     
     res.json(JSON.stringify(dataList));
+
+    }
   });
 
 });
@@ -185,5 +203,26 @@ function isLoggedIn(req, res, next) {
     // jos ei ole, ohjataan kirjautumissivulle
     res.redirect('/');
 }
+
+
+function shuffle(array) { //Knuth-shuffle, sekoittaa vastausvaihtoehdot.
+    //lähde: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+    var currentIndex = array.length, temporaryValue, randomIndex;
+  
+    
+    while (0 !== currentIndex) {
+  
+      
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+     
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
+  }
 
   module.exports = router;

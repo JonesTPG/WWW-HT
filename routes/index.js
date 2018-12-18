@@ -51,7 +51,7 @@ app.post('/update-profile', isLoggedIn, (req, res) => {
 
       res.status(200).send();
     });
-  } );
+  });
     
 
   

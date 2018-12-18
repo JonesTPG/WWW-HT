@@ -41,6 +41,8 @@ router.post('/save-questions', isLoggedIn, function (req, res) {
         quizitem.question = questions[i].question;
         quizitem.hint = questions[i].hint;
         quizitem.answer = questions[i].answer;
+        quizitem.option1 = questions[i].option1;
+        quizitem.option2 = questions[i].option2;
         quizitem.imageUrl = '../images/quiz/default.jpg';
 
         quizitem.save(function(err) {
@@ -51,7 +53,26 @@ router.post('/save-questions', isLoggedIn, function (req, res) {
     }
 
     res.json({success: true});
-})
+});
+
+router.post('/update-genre', isLoggedIn, function(req, res) {
+    var genre = req.body.genre;
+    var amount = req.body.amount;
+
+    Genre.findOne( {'name': genre}, function (err, doc) {
+    
+        doc.questionAmount = doc.questionAmount + amount;
+        
+        doc.save(function (err) {
+          if (err) {
+            console.log(err);
+          }
+    
+          res.status(200).send();
+        });
+      });
+
+});
 
 
 router.get('/questions', isLoggedIn, function (req, res) {

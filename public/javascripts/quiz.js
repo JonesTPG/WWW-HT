@@ -35,6 +35,7 @@ var app = new Vue({
         user: null,
         cur: {
             question: null,
+            options: [],
             hint: null,
             imgUrl: null
         },
@@ -66,13 +67,27 @@ var app = new Vue({
 
         axios.post('http://localhost:3000/quiz/get-questions', data).then((response)=> {
                 var data = JSON.parse(response.data);
-                
+                console.log(data)
+                if (data == true) {
+                    console.log("redirect")
+                    window.location.href = 'http://localhost:3000/quiz/start?error=true';
+                    return;
+                }
                 this.questionList = data;
 
                 var firstq = data[0];
                 this.cur.question = firstq.question;
+                this.cur.options[0] = firstq.option3;
+                this.cur.options[1] = firstq.option1;
+                this.cur.options[2] = firstq.option2;
+
+                this.cur.options = this.shuffle(this.cur.options);
+
+
                 this.cur.hint = firstq.hint;
                 this.cur.imgUrl = firstq.imageUrl;
+
+                console.log(firstq)
                 
         });
 
@@ -108,6 +123,13 @@ var app = new Vue({
             this.answer = null;
             var nextq = this.questionList[this.qNumber];
             this.cur.question = nextq.question;
+
+            this.cur.options[0] = nextq.option3;
+            this.cur.options[1] = nextq.option1;
+            this.cur.options[2] = nextq.option2;
+
+           this.cur.options = this.shuffle(this.cur.options);
+
             this.cur.hint = nextq.hint;
             this.cur.imgUrl = nextq.imageUrl;
             this.showHint = false;
@@ -173,29 +195,30 @@ var app = new Vue({
 
 
             
-        }
+        },
 
-
-         // saveAnswerAndPrevious() {
-
-        //     if ( this.qNumber == 0 ) {
-        //         return;
-        //     }
-        //     if (this.answer != null) {
-               
-        //         this.answerdata[this.qNumber] = {question: this.questionList[this.qNumber].question, answer: this.answer};
-        //     }
-
+        shuffle(array) { //Knuth-shuffle, sekoittaa vastausvaihtoehdot.
+            //lähde: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+            var currentIndex = array.length, temporaryValue, randomIndex;
+          
             
-        //     this.answer = null;
-            
-        //     this.qNumber--;
-        //     var prevq = this.questionList[this.qNumber];
-        //     this.cur.question = prevq.question;
-        //     this.cur.hint = prevq.hint;
-        //     this.cur.imgUrl = prevq.imageUrl;
-        //     this.showHint = false;
-        // },
+            while (0 !== currentIndex) {
+          
+              
+              randomIndex = Math.floor(Math.random() * currentIndex);
+              currentIndex -= 1;
+          
+             
+              temporaryValue = array[currentIndex];
+              array[currentIndex] = array[randomIndex];
+              array[randomIndex] = temporaryValue;
+            }
+          
+            return array;
+          }
+
+
+        
     }
     
     

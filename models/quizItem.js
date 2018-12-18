@@ -6,6 +6,8 @@ var quizItemSchema = new Schema({
 
         question     : String,
         answer       : String,
+        option1      : String,
+        option2      : String,
         hint         : String,
         imageUrl     : String,
         difficulty   : String,

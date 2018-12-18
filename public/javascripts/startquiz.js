@@ -114,12 +114,25 @@ var app = new Vue({
         
         
         genreList: null,
-        amount: 0
+        amount: 0,
+        error: false,
+        infoText: null
         
         
     },
 
      created: function () {
+
+        var url = window.location.href;  
+        console.log(url);
+        var urlObj = new URL(url);
+
+        this.error = urlObj.searchParams.get("error");
+        if (this.error) {
+            this.infoText = "Quizia ei voida aloittaa, koska genressä ei ole tarpeeksi kysymyksiä";
+        }
+
+
         axios.get('http://localhost:3000/quiz/genres').then((response)=> {
                 var data = JSON.parse(response.data);
                 this.genreList = data;

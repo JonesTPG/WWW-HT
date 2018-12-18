@@ -41,8 +41,8 @@ function genreCreate(name, questionAmount, imageUrl, cb) {
     }  );
   }
 
-  function quizItemCreate(question, answer, imageUrl, hint, difficulty, genre, genreName, cb) {
-    quizItemDetail = {question:question , answer: answer, hint: hint,
+  function quizItemCreate(question, answer, option1, option2, imageUrl, hint, difficulty, genre, genreName, cb) {
+    quizItemDetail = {question:question , answer: answer, option1: option1, option2: option2, hint: hint,
                     imageUrl: imageUrl, difficulty:difficulty, genre:genre, genreName: genreName }
     // if (imageUrl != false) authordetail.date_of_birth = imageUrl
     // if (d_death != false) authordetail.date_of_death = d_death
@@ -65,13 +65,13 @@ function genreCreate(name, questionAmount, imageUrl, cb) {
   function createGenres(cb) {
       async.parallel([
           function(callback) {
-                genreCreate('Ohjelmointi', 15, '../images/program.jpg', callback);
+                genreCreate('Ohjelmointi', 0, '../images/program.jpg', callback);
           },
           function(callback) {
-                genreCreate('Matematiikka', 22, '../images/math.jpg', callback);
+                genreCreate('Matematiikka', 8, '../images/math.jpg', callback);
         },
           function(callback) {
-                genreCreate('Elokuvat', 15, '../images/movie.jpg', callback);
+                genreCreate('Elokuvat', 0, '../images/movie.jpg', callback);
         },  
       ],
       cb);
@@ -80,86 +80,38 @@ function genreCreate(name, questionAmount, imageUrl, cb) {
   function createQuizItems(cb) {
     async.parallel([
         function(callback) {
-              quizItemCreate('Paljon on 1+1', "2", "../images/quiz/default.jpg",
+              quizItemCreate('Paljon on 1+1', "2", "3", "1", "../images/quiz/default.jpg",
                "suattaapi olla 2", "easy", genres[1], "Matematiikka", callback);
         },
         function(callback) {
-            quizItemCreate('Paljon on 2+3', "5", "../images/quiz/default.jpg",
+            quizItemCreate('Paljon on 2+3', "5", "6", "7", "../images/quiz/default.jpg",
              "suattaapi olla 5", "medium", genres[1], "Matematiikka", callback);
         },
         function(callback) {
-            quizItemCreate('Paljon on 2+4', "6", "../images/quiz/default.jpg",
+            quizItemCreate('Paljon on 2+4', "6", "3", "9", "../images/quiz/default.jpg",
              "suattaapi olla 6", "medium", genres[1], "Matematiikka", callback);
         },
         function(callback) {
-            quizItemCreate('Paljon on 234+3', "237", "../images/quiz/default.jpg",
+            quizItemCreate('Paljon on 234+3', "237", "273", "243", "../images/quiz/default.jpg",
              "suattaapi olla 237", "medium", genres[1], "Matematiikka", callback);
         },
         function(callback) {
-            quizItemCreate('Paljon on 245+3', "248", "../images/quiz/default.jpg",
+            quizItemCreate('Paljon on 245+3', "248", "251", "247", "../images/quiz/default.jpg",
              "suattaapi olla 248", "medium", genres[1], "Matematiikka", callback);
         },
         function(callback) {
-            quizItemCreate('Paljon on 2+2343', "2345", "../images/quiz/default.jpg",
+            quizItemCreate('Paljon on 2+2343', "2345", "2545", "2536", "../images/quiz/default.jpg",
              "suattaapi olla 2345", "medium", genres[1], "Matematiikka", callback);
         },
         function(callback) {
-            quizItemCreate('Paljon on 2234+13', "2247", "../images/quiz/default.jpg",
+            quizItemCreate('Paljon on 2234+13', "2247", "2254", "2258", "../images/quiz/default.jpg",
              "suattaapi olla 2247", "medium", genres[1], "Matematiikka", callback);
         },
         function(callback) {
-            quizItemCreate('Paljon on 2+45', "47", "../images/quiz/default.jpg",
+            quizItemCreate('Paljon on 2+45', "47", "51", "41", "../images/quiz/default.jpg",
              "suattaapi olla 47", "medium", genres[1],"Matematiikka", callback);
-        },
-        function(callback) {
-            quizItemCreate('Paljon on 2+45', "47", "../images/quiz/default.jpg",
-             "suattaapi olla 47", "medium", genres[0],"Ohjelmointi", callback);
-        },
-        function(callback) {
-            quizItemCreate('Paljon on 2+45', "47", "../images/quiz/default.jpg",
-             "suattaapi olla 47", "medium", genres[0],"Ohjelmointi", callback);
-        },
-        function(callback) {
-            quizItemCreate('Paljon on 2+45', "47", "../images/quiz/default.jpg",
-             "suattaapi olla 47", "medium", genres[0],"Ohjelmointi", callback);
-        },
-        function(callback) {
-            quizItemCreate('Paljon on 2+45', "47", "../images/quiz/default.jpg",
-             "suattaapi olla 47", "medium", genres[0],"Ohjelmointi", callback);
-        },
-        function(callback) {
-            quizItemCreate('Paljon on 2+45', "47", "../images/quiz/default.jpg",
-             "suattaapi olla 47", "medium", genres[0],"Ohjelmointi", callback);
-        },
-        function(callback) {
-            quizItemCreate('Paljon on 2+45', "47", "../images/quiz/default.jpg",
-             "suattaapi olla 47", "medium", genres[0],"Ohjelmointi", callback);
-        },
-        function(callback) {
-            quizItemCreate('Paljon on 2+45', "47", "../images/quiz/default.jpg",
-             "suattaapi olla 47", "medium", genres[0],"Ohjelmointi", callback);
-        },
-        function(callback) {
-            quizItemCreate('Paljon on 2+45', "47", "../images/quiz/default.jpg",
-             "suattaapi olla 47", "medium", genres[0],"Ohjelmointi", callback);
-        },
-        function(callback) {
-            quizItemCreate('Paljon on 2+45', "47", "../images/quiz/default.jpg",
-             "suattaapi olla 47", "medium", genres[0],"Ohjelmointi", callback);
-        },
-        function(callback) {
-            quizItemCreate('Paljon on 2+45', "47", "../images/quiz/default.jpg",
-             "suattaapi olla 47", "medium", genres[0],"Ohjelmointi", callback);
-        },
-        function(callback) {
-            quizItemCreate('Paljon on 2+45', "47", "../images/quiz/default.jpg",
-             "suattaapi olla 47", "medium", genres[0],"Ohjelmointi", callback);
-        },
-        function(callback) {
-            quizItemCreate('Paljon on 2+45', "47", "../images/quiz/default.jpg",
-             "suattaapi olla 47", "medium", genres[0],"Ohjelmointi", callback);
         }
-      
+        
     ],
     cb);
 }

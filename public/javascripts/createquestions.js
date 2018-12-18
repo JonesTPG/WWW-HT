@@ -13,7 +13,9 @@ var app = new Vue({
         answer: null,
         amount: 0,
         infoText: null,
-        hint: null
+        hint: null,
+        option1: null,
+        option2: null
       
     },
 
@@ -44,12 +46,27 @@ var app = new Vue({
             return;
         }
 
+        if (this.option1 == null || this.option1 == '') {
+            this.infoText = "Laita väärä vastaus 1."
+            return;
+        }
+
+        if (this.option2 == null || this.option2 == '') {
+            this.infoText = "Laita väärä vastaus 2."
+            return;
+        }
+
         this.infoText = 'Kysymys tallennettu. Syötä uusi kysymys. Jos olet valmis, paina "valmis".';
 
-        this.questiondata.push({question: this.question, answer: this.answer, hint: this.hint});
+        this.questiondata.push({question: this.question, answer: this.answer, hint: this.hint,
+        option1: this.option1, option2: this.option2});
+        
+        this.amount = this.questiondata.length;
         this.answer = '';
         this.question = '';
         this.hint = '';
+        this.option1 = '';
+        this.option2 = '';
 
         return;
        },
@@ -63,11 +80,17 @@ var app = new Vue({
         var data = {genre: this.genre, questions: this.questiondata};
 
         axios.post('http://localhost:3000/create/save-questions', data).then((response)=> {
-                    
-                    
-                   console.log("success");
-                   window.location.href = "http://localhost:3000/profile";
-                   return;
+
+                var data2 = {genre: this.genre, amount: this.amount};
+
+                axios.post('http://localhost:3000/create/update-genre', data2).then((response)=> {
+
+                    console.log('genre updated.');
+                    window.location.href = "http://localhost:3000/profile";
+
+                }).catch(function(error) {
+                    console.log(error);
+                });            
                     
                     
             }).catch(function(error) {

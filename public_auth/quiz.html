@@ -65,7 +65,25 @@ kaverisi kilpailuun. Rekisteröidy jo tänään, se on ilmaista!" />
                             
 
                             <div style="width: 100px; margin-left:45%;">
-                                    <input class="inputti" v-model="answer" placeholder="vastaus">
+
+                                    <label>
+                                        <input class="with-gap" type="radio" v-bind:value="cur.options[0]" v-model="answer"/>
+                                        <span>{{cur.options[0]}}</span>
+                                    </label>
+                                        </p>
+                                        <p>
+                                          <label>
+                                            <input class="with-gap" type="radio" v-bind:value="cur.options[1]" v-model="answer"/>
+                                            <span>{{cur.options[1]}}</span>
+                                          </label>
+                                        </p>
+                                        <p>
+                                          <label>
+                                            <input class="with-gap" type="radio" v-bind:value="cur.options[2]" v-model="answer"/>
+                                            <span>{{cur.options[2]}}</span>
+                                          </label>
+
+
                             </div>
                             <!-- <button v-on:click="saveAnswerAndPrevious" class="waves-effect blue darken-1 btn">Edellinen</button> -->
                             <button id="next" v-on:click="saveAnswerAndNext" class="waves-effect blue darken-1 btn">Seuraava</button>
