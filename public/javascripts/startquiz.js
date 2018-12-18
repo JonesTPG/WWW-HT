@@ -87,7 +87,9 @@ Vue.component('questionAmount', {
                     <option v-for="amount in amounts" v-bind:value="amount">{{amount}}</option>
                     
                 </select>
-                <br><br><br><br>
+                <br><br>
+               
+                <br><br>
 
                 <a href="/profile" class="waves-effect blue darken-1 btn">Takaisin</a>
                 <button v-on:click="getSelected" class="waves-effect blue darken-1 btn">Aloita</button>

@@ -51,13 +51,13 @@ kaverisi kilpailuun. Rekisteröidy jo tänään, se on ilmaista!" />
                             
                             <div style="width: 100px; margin-left:40%;">
                                     <h4 class="white-text">Kysymys:</h4>
-                                    <input v-model="question">
+                                    <input class="inputti" v-model="question">
 
                                     <h4 class="white-text">Vastaus:</h4>
-                                    <input v-model="answer">
+                                    <input class="inputti" v-model="answer">
 
                                     <h4 class="white-text">Vihje:</h4>
-                                    <input v-model="hint">
+                                    <input class="inputti" v-model="hint">
                             </div>
                             
                             <button id="next" v-on:click="saveAndNext" class="waves-effect blue darken-1 btn">Seuraava</button>

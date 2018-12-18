@@ -106,7 +106,11 @@ var app = new Vue({
   
     methods: {
         
-        
+        retry() {
+
+            window.location.href = "http://localhost:3000/quiz/newquiz?genre="+this.genre+"&amount="+this.amount;
+
+        }
 
     }
     

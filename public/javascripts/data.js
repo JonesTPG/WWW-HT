@@ -11,22 +11,21 @@ var app = new Vue({
         selectedGenre: "",
         rows: [],
         allrows: [],
-        genreList: [],
-        genreNames: []
+        genreList: []
+       
+       
       
     },
 
      created: function () {
         console.log("hello");
 
-        document.addEventListener('DOMContentLoaded', function() {
-            this.elems = document.querySelectorAll('select');
-            this.instances = M.FormSelect.init(this.elems, "*");
-          });
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     this.elems = document.querySelectorAll('select');
+        //     this.instances = M.FormSelect.init(this.elems, "*");
+        //   });
 
-        //   this.rows.push({user: 'joonas', date: '19.12.1997', questions: '5', genre: 'Matematiikka', score: '344'});
-
-        //   this.rows.push({user: 'kassu', date: '19.12.1997', questions: '5', genre: 'Matematiikka', score: '344'});
+       
 
 
           axios.get('http://localhost:3000/data').then((response)=> {
@@ -68,9 +67,9 @@ var app = new Vue({
                     
                     
                     this.genreList = data;
-                    // for (var i=0; i<this.genreList.length; i++) {
-                    //     this.genreNames.push({name: this.genreList[i].name});
-                    // }
+                    
+                    
+                   
                     
                 });
                 
@@ -92,7 +91,7 @@ var app = new Vue({
             }
 
             if (this.selectedAmount == "" && this.selectedGenre != "") {
-                var newRows = [{}];
+                var newRows = [];
                 for (var i=0; i<this.allrows.length; i++) {
                     if (this.allrows[i].genre == this.selectedGenre) {
                         newRows.push(this.allrows[i]);
@@ -106,7 +105,7 @@ var app = new Vue({
             }
 
             if (this.selectedAmount != "" && this.selectedGenre == "") {
-                var newRows = [{}];
+                var newRows = [];
                 for (var i=0; i<this.allrows.length; i++) {
                     if (this.allrows[i].questions == this.selectedAmount) {
                         newRows.push(this.allrows[i]);

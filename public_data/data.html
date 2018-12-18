@@ -42,25 +42,27 @@ kaverisi kilpailuun. Rekisteröidy jo tänään, se on ilmaista!" />
         <div id="app">
             <div class="row">
                 <div class="input-field col l2 white-text">
-                        <select v-model="selectedAmount" class="white-text">
+                        <select v-model="selectedAmount" class="browser-default">
                           <option value="" selected>Valitse kysymysten määrä</option>
                           <option value="3">kolme</option>
                           <option value="5">viisi</option>
                           <option value="10">kymmenen</option>
                         </select>
-                        <label>Kysymysten määrä:</label>
+                        <!-- <label>Kysymysten määrä:</label> -->
                  </div>
 
                  <div class="input-field col l2 white-text">
-                        <select v-model="selectedGenre" class="white-text">
+                        <select v-model="selectedGenre" class="browser-default">
                           <option value="" selected>Valitse genre</option>
                           
-                          <option value="Matematiikka">Matematiikka</option>
-                          <option value="Ohjelmointi">Ohjelmointi</option>
-                          <option value="Elokuvat">Elokuvat</option>
+                          <option v-for="genre in genreList" v-bind:value="genre.name">{{genre.name}}</option>
                         </select>
-                        <label>Genre:</label>
+                        <!-- <label>Genre:</label> -->
                  </div>
+
+                 
+                 
+                 
                  <div class="col l3 white-text">
                         <button style="margin-top: 20px;" v-on:click="update" class="waves-effect blue darken-1 btn">Päivitä</button>
                         <a style="margin-top: 20px;" href="/profile" class="waves-effect blue darken-1 btn">Takaisin</a>

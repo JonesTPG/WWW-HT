@@ -49,17 +49,27 @@ kaverisi kilpailuun. Rekisteröidy jo tänään, se on ilmaista!" />
             <!-- VUE ALKAA -->
             <div id="app">
                 
-                <p class="white-text center">Kysymys {{qNumber+1}}/{{amount}}</p>
+                <h2 class="white-text center">Kysymys {{qNumber+1}}/{{amount}}</h2>
+                <h4 class="white-text center" id ="timer"> Pisteet: {{timer}}</h4>
+                
                 <div class="row">
 
-                    <div class="center col l9">
-                            <img :src="cur.imgUrl" alt="quizimage" height="300px" width="300px"/>
-                            <p class="white-text center">{{cur.question}}</p>
-                            <div style="width: 100px; margin-left:40%;">
-                                    <input v-model="answer" placeholder="edit me">
+                    <div class="center">
+                        <div class="right">
+                            <button v-on:click="showhint" class="waves-effect blue darken-1 btn">Vihje</button><br>
+                            <p v-if="showHint" class="white-text" id ="timer">{{cur.hint}}</p>
+                        </div>
+                            <img style="margin-left: 5%;":src="cur.imgUrl" alt="quizimage" height="300px" width="300px"/>
+                            <h3 class="white-text center">{{cur.question}}</h3>
+                             
+                            
+
+                            <div style="width: 100px; margin-left:45%;">
+                                    <input class="inputti" v-model="answer" placeholder="vastaus">
                             </div>
                             <!-- <button v-on:click="saveAnswerAndPrevious" class="waves-effect blue darken-1 btn">Edellinen</button> -->
                             <button id="next" v-on:click="saveAnswerAndNext" class="waves-effect blue darken-1 btn">Seuraava</button>
+                            <p class="white-text" id ="timer">{{infoText}}</p>
                             <div v-if="ready">
                              
                              
@@ -67,16 +77,14 @@ kaverisi kilpailuun. Rekisteröidy jo tänään, se on ilmaista!" />
                                  
                         </div>
                     </div>
-                    <div class="col l3">
+                    <div class="right">
                             
-                            <p class="white-text" id ="timer">{{timer}}</p>
-                            <button v-on:click="showhint" class="waves-effect blue darken-1 btn">Vihje</button>
-                            <p v-if="showHint" class="white-text" id ="timer">{{cur.hint}}</p>
+                           
                             <br><br><br>
                            
                              
                        
-                            <p class="white-text" id ="timer">{{infoText}}</p>
+                           
                     </div>
 
                     <div class="col l9">

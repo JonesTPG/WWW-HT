@@ -14,6 +14,14 @@ main {
   flex: 1 0 auto;
 }
 
-.input-field {
-	color:white !important;
-} 
+.inputti {
+	color: white;
+}
+
+.valittu {
+	border: 5px solid black;
+}
+
+.select-wrapper input.select-dropdown { /*kysymysten määrä -dropdown valkoiseksi*/
+	color: white;
+}

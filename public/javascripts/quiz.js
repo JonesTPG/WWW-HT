@@ -8,7 +8,7 @@ function timer() {
     timer = 1000;
     var interval = setInterval(function() {
         timer--;
-        document.getElementById("timer").innerHTML = timer;
+        document.getElementById("timer").innerHTML = "Pisteet: " +timer;
         if (timer == 0) {
             timer = 1;
         }
