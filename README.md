@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.org/JonesTPG/WWW-HT.svg?branch=master)](https://travis-ci.org/JonesTPG/WWW-HT)
