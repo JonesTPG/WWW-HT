@@ -9,8 +9,8 @@ var app = new Vue({
         infoText: null,
         selectedAmount: "",
         selectedGenre: "",
-        rows: [],
-        allrows: [],
+        rows: [], //pitää sisällään filtteröidy tulokset, aluksi sisältää kaikki tulokset
+        allrows: [], //pitää sisällään kaikki tulokset
         genreList: []
        
        
@@ -18,28 +18,18 @@ var app = new Vue({
     },
 
      created: function () {
-        console.log("hello");
-
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     this.elems = document.querySelectorAll('select');
-        //     this.instances = M.FormSelect.init(this.elems, "*");
-        //   });
-
-       
-
-
-          axios.get('http://localhost:3000/data').then((response)=> {
+        //haetaan data back-endiltä
+        axios.get('http://localhost:3000/data').then((response)=> {
                 var data = JSON.parse(response.data);
 
-                
+                //käydään tulokset yksi kerrallaan läpi
                 for (var i=0; i<data.length; i++) {
 
+                    //päivämäärästä tehdään järkevän näköinen stringi. (date-objektin metodit)
+                    //eivät syystä tai toisesta toimineet, pakko tehdä näin
                     var hour = parseInt(data[i].date.toString().substring(11,13));
-                   
                     hour = hour + 2;
                     hour = hour.toString() + ":";
-
-                    
                     var d = data[i].date.toString().substring(8,10) +  "." + data[i].date.toString().substring(5,7)
                       + 
                     " " + hour + data[i].date.toString().substring(14,16);
@@ -52,6 +42,7 @@ var app = new Vue({
 
                 }
 
+                //sortataan tulokset scoren perusteella
                 this.rows.sort(function (a,b) {
                     if (a.score < b.score) {
                         return 1;
@@ -62,15 +53,10 @@ var app = new Vue({
                     return 0;
                 });
 
+                //käydään vielä genret kannasta, jotta ne voidaan näyttää dropdown-valikossa filtterinä
                 axios.get('http://localhost:3000/quiz/genres').then((response)=> {
                     var data = JSON.parse(response.data);
-                    
-                    
                     this.genreList = data;
-                    
-                    
-                   
-                    
                 });
                 
         });
@@ -82,9 +68,8 @@ var app = new Vue({
     methods: {
 
         update() {
-            console.log('update');
-            console.log(this.selectedAmount + this.selectedGenre);
-
+            
+            //päivitetään rows-listaa filttereiden mukaan
             if (this.selectedAmount == "" && this.selectedGenre == "") {
                 this.rows = this.allrows;
                 return;
@@ -137,6 +122,7 @@ var app = new Vue({
            
         },
 
+        //luodaan tuloksista pdf jsPDF-kirjastolla.
         genPDF() {
             var doc = new jsPDF()
 
@@ -148,21 +134,21 @@ var app = new Vue({
 
             doc.text('Käyttäjä              Päivämäärä              Kysymyksiä           Genre           Tulos', 0, 50);
             var y = 55;
+
+            //tehdään jokaisesta tulosrivistä oma rivi pdf:ään
             for (var i=0; i<this.rows.length; i++) {
                 var u = this.rows[i].user;
                 var g = this.rows[i].genre;
                 var a = this.rows[i].questions;
                 var s = this.rows[i].score;
                 var d = this.rows[i].date;
-
-             
+                
                 doc.text(u, 0, y);
                 doc.text(d, 40, y);
                 doc.text(a.toString(), 110, y);
                 doc.text(g, 130, y);
                 doc.text(s.toString(), 170, y);
 
-                //doc.text(u+'            '+d+'           '+a+'           '+g+'           '+s, 0, y);
                 y = y+5;
             }
 

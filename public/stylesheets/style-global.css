@@ -14,7 +14,7 @@ main {
   flex: 1 0 auto;
 }
 
-.inputti {
+.inputti { /*formien tekstit valkoisiksi*/
 	color: white;
 }
 

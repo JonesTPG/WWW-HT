@@ -1,13 +1,13 @@
 'use strict'
 
 
-
-
+//materialize.css collapsible-komponentin alustus
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.collapsible');
     var instances = M.Collapsible.init(elems, {});
   });
 
+//Vue-komponentti, joka näyttää yhden kysymyksen lisätiedot tulossivulla
 Vue.component('resultItem', {
     props: ['item'],
     
@@ -61,6 +61,8 @@ var app = new Vue({
 
      created: function () {
 
+
+        //haetaan päättyneen quizin tiedot url-parametrina saadun id:n perusteella.
         var url = window.location.href;  
         
         var urlObj = new URL(url);
@@ -76,14 +78,14 @@ var app = new Vue({
             this.questions = data.questions;
             this.booleanAnswers = data.booleanAnswers;
 
-           
-            console.log(this.data)
-            
             this.score = data.score;
             this.genre = data.genre;
             this.amount = data.amount;
             this.right = data.right;
-           
+
+            //laitetaan serveriltä saatu data listaan, jonka yksittäinen elementti annetaan
+            //html:ssä propsina yksittäiselle elementille
+
             for (var i=0; i<this.amount; i++) {
                 this.data[i] = {
                     userAnswer: this.userAnswers[i],
@@ -95,8 +97,6 @@ var app = new Vue({
                 }
             }
 
-
-                    
             }).catch(function(error) {
                 console.log(error);
             });
@@ -105,7 +105,8 @@ var app = new Vue({
   
   
     methods: {
-        
+        //metodi, joka ohjaa käyttäjän uuteen quiziin mikäli käyttäjä haluaa yrittää uudestaan
+        //samoilla asetuksilla
         retry() {
 
             window.location.href = "http://localhost:3000/quiz/newquiz?genre="+this.genre+"&amount="+this.amount;

@@ -2,6 +2,9 @@
 
 var selectedgenre;
 
+//komponentti saa propsina yksittäisen genre-objektin
+//pääkomponentin listasta
+
 Vue.component('genreItem', {
     props: ['item'],
     
@@ -13,6 +16,8 @@ Vue.component('genreItem', {
             
         }
     },
+
+//template yksittäiselle genrelle materialize-collectionissa
 
     template: `
     
@@ -49,13 +54,11 @@ var app = new Vue({
         
         genreList: [],
         newGenre: null,
-        infoText: null
-       
-        
+        infoText: null   
     },
 
      created: function () {
-       
+        //haetaan genret ajaj:lla
         axios.get('http://localhost:3000/quiz/genres').then((response)=> {
             var data = JSON.parse(response.data);
             
@@ -72,20 +75,21 @@ var app = new Vue({
                 return;
             }
 
+            //laitetaan uusi genre back-endille tallennettavaksi, ja ladataan sivu jotta
+            //se tulee listaan näkyviin.
+
             var data = {genre: this.newGenre};
             axios.post('http://localhost:3000/create/new-genre', data).then((response)=> {
-                
-                console.log("success");
                 window.location.reload(false); 
-                
                 return;
-
             })
 
            return;
        },
 
        proceed() {
+        //genre on valittu, viedään käyttäjä kysymysten-teko sivulle ja laitetaan url-parametriksi
+        //valittu genre
 
         if (selectedgenre == null) {
             this.infoText = 'Sinun täytyy valita genre ennen kuin voit valita kysymyksiä.';

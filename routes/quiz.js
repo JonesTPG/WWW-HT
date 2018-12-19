@@ -1,5 +1,10 @@
 'use strict'
 
+/*Express Router Root: /quiz
+  Tehtävä: Huolehtii uuden quizin luomisesta, ja tuloksen tallentamisesta
+  */
+
+
 var express = require('express');
 var router = express.Router();
 var path = require('path');
@@ -7,14 +12,20 @@ var Genre = require('../models/genre');
 var QuizItem = require('../models/quizItem');
 var Result = require('../models/result');
 
-router.get('/', isLoggedIn, function (req, res) {
+
+//ei varsinaista merkitystä, pidetään kuitenkin route ylhäällä yksikkötestejä varten.
+router.get('/', function (req, res) {
     res.send('Quiz-router');
   });
 
+
+//viedään sivu, jossa quizin valmistelunäkymä
 router.get('/start', isLoggedIn, function (req, res) {
     res.sendFile(path.join(__dirname, '../public_auth', 'startquiz.html'));
 });
 
+
+//palauttaa kaikki kannasta löytyvät genret. Frontissa Vue listaa ne käyttäjälle
 router.get('/genres', function (req, res) {
     
     Genre.find({})
@@ -25,23 +36,26 @@ router.get('/genres', function (req, res) {
 
 });
 
+//palauttaa fronttiin randomilla valitut kysymykset tietokannasta. jos tarpeeksi kysymyksiä ei löydy,
+//palautetaan error-message jonka avulla Vue reagoi.
+
 router.post('/get-questions', function (req, res) {
     
-    var amount = req.body.amount;
-    var genre = req.body.genre;
-    let dataList = [];
-    var data;
+    var amount = req.body.amount; //kysymysten määrä
+    var genre = req.body.genre; // valittu genre
+    let dataList = [];  
+    
  
-    QuizItem.find({genreName: genre})
+    QuizItem.find({genreName: genre}) //etsitään kaikki genren kysymykset
     .lean()
     .exec(function(err, results) {
     var data = results;
     var count = data.length;
     
     
-    data = shuffle(data);
+    data = shuffle(data); //sekoitetaan lista
 
-    if (count<amount) {
+    if (count<amount) {  //kysymyksiä ei tarpeeksi, return error
         console.log("error");
         var error  = true;
         res.json(JSON.stringify(error));
@@ -51,47 +65,51 @@ router.post('/get-questions', function (req, res) {
     else {
    
 
-        for (var i=0; i<count; i++) {      //otetaan amountin verran kysymyksiä, ja randomisoidaan kysymykset
-            //var random = Math.floor(Math.random()*count);
+        for (var i=0; i<count; i++) {      //otetaan oikean määrän verran kysymyksiä
+            
             dataList[i] = data[i];
         }
 
-        // for (var i=count; i<amount; i++) {
-        //     var random = Math.floor(Math.random()*count);
-        //     dataList[i] = data[random];
-        // }
             
         for (let i=0; i<dataList.length; i++) {
                 dataList[i].option3 = dataList[i].answer;
-                dataList[i].answer = null;          //vaihdetaan vastaus-objektin nimi.
+                dataList[i].answer = null;          //vaihdetaan kentän nimi, jotta frontissa vaihtoehdot näkyvät
+                                                    //arvoilla option1, option2, option3
         }
 
     
-    res.json(JSON.stringify(dataList));
+    res.json(JSON.stringify(dataList)); //palautetaan Vuelle lista, jossa randomit kysymykset genrestä
 
     }
   });
 
 });
 
+
+//tallennetaan tulokset quizin jälkeen kantaan.
+
 router.post('/save-results', (req, res) => {
-    var userAnswers = req.body.answerdata;
-    var amount = req.body.amount;
-    var genre = req.body.genre;
+    var userAnswers = req.body.answerdata; //lista, joka sisältää käyttäjän vastaukset
+    var amount = req.body.amount;   //kysymysten määrä
+    var genre = req.body.genre;     //quizin genre
 
     
     
-    //console.log( "saadut kysymykset:" + questiondata[1].question );
+    //etsitään tietokannasta kaikki genren kysymykset, ja etsitään sitten sieltä quiziin valitut kysymykset.
+    //huom. jos kysymyksiä on genressä todella paljon, ei tämä olisi enää tehokas tapa, mutta tässä tapauksessa
+    //tapa käy hyvin, eikä tietokannastakaan tarvitse hakea kun kerran tietoa.
+
     QuizItem.find({genreName: genre})
     .lean()
     .exec(function(err, results) {
     var data = results;
     var count = data.length;
-    var quizResult = [];
+    var quizResult = []; //lista, johon kerätään tiedot kunkin kysymyksen onnistumisesta
+
     for (var i=0; i<count; i++) {
         for (var j=0; j<amount; j++) {
             
-            if (data[i].question == userAnswers[j].question) {
+            if (data[i].question == userAnswers[j].question) {   //vastaava kysymys on löydetty
                 
 
                 if ( data[i].answer == userAnswers[j].answer ) { //vastaus on oikein
@@ -100,7 +118,7 @@ router.post('/save-results', (req, res) => {
                     userAnswer: userAnswers[j].answer, rightAnswer: userAnswers[j].answer,
                     question: userAnswers[j].question  };
                 }
-                else {
+                else { //vastaus on väärin
                     quizResult[j] = {  answer: false, score: -100,
                     userAnswer: userAnswers[j].answer, rightAnswer: data[i].answer,
                     question: userAnswers[j].question  };
@@ -109,6 +127,7 @@ router.post('/save-results', (req, res) => {
         }
     }
 
+    //koostetaan edellä kerätystä listasta vielä lisätietoja
     var right = 0;
     var score = 0;
     var questions = [];
@@ -127,6 +146,9 @@ router.post('/save-results', (req, res) => {
         }
         score = score + quizResult[i].score;
     }
+
+    //tallennetaan edellä hankitut tiedot uuteen result-dokumenttiin, ja
+    //talletetaan se tietokantaan
 
     var newResult            = new Result();
 
@@ -148,6 +170,8 @@ router.post('/save-results', (req, res) => {
             if (err)
                 throw err;
             
+            //palautetaan Vuelle luodon resultin id. Vue redirectaa käyttäjän tulossivulle, jossa
+            //vastaluotu tulos näytetään käyttäjälle.
             res.json(JSON.stringify(result._id));
         
         });
@@ -159,10 +183,12 @@ router.post('/save-results', (req, res) => {
 
 });
 
+//palautetaan tulossivu
 router.get('/results', isLoggedIn, function (req, res) {
     res.sendFile(path.join(__dirname, '../public_auth', 'results.html'));
 });
 
+//hakee tietokannasta id:n perusteella tuloksen, joka näytetään Vuessa.
 router.post('/get-results', isLoggedIn, function(req, res) {
     var id = req.body.id;
     console.log(id);
@@ -174,18 +200,15 @@ router.post('/get-results', isLoggedIn, function(req, res) {
 
 });
 
+
+//ohjaa käyttäjän quiz-sivulle, kun tiedossa on uuden quizin genre ja kysymysten määrä
 router.get('/startquiz', isLoggedIn, function (req, res) {
     var genre = req.query.genre;
     var amount = req.query.amount;
-    var username = req.user.local.username;
-    console.log(genre+amount+username);
-    //res.json({genre: genre, amount: amount, username: username});
-    //res.redirect('/quiz/newquiz?genre='+genre+'&amount='+amount+'&user='+username);
     res.redirect('/quiz/newquiz?genre='+genre+'&amount='+amount);
-
-
 });
 
+//palauttaa quizin-aloitussivun
 router.get('/newquiz', isLoggedIn, function(req, res) {
     res.sendFile(path.join(__dirname, '../public_auth', 'quiz.html'));
 })
@@ -205,7 +228,8 @@ function isLoggedIn(req, res, next) {
 }
 
 
-function shuffle(array) { //Knuth-shuffle, sekoittaa vastausvaihtoehdot.
+function shuffle(array) { 
+    //Knuth-shuffle, sekoittaa parametrina annetun listan ja palauttaa sekoitetun listan.
     //lähde: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
     var currentIndex = array.length, temporaryValue, randomIndex;
   

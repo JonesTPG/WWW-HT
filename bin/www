@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 
-/**
- * Module dependencies.
- */
+//normaali serveri-tiedosto
 
 var app = require('../app');
 var debug = require('debug')('ht:server');

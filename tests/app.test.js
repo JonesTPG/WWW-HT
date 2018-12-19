@@ -9,7 +9,7 @@ const app = require('../app');
 const User = require('../models/user.js');
 
 
-describe('Testataan MongoDB-yhteys', () => {
+describe('Testataan MongoDB-yhteys', () => {    //testataan mongoose-yhteys
     test('Testataan yhteys', (done) => {
       localmongoose.connect(config.url).then(() => {
         expect(localmongoose.connection.readyState).toBe(1);
@@ -20,12 +20,12 @@ describe('Testataan MongoDB-yhteys', () => {
   });
 
 
-describe('Testataan kirjautumissivu', () => {
+describe('Testataan kirjautumissivu', () => {   
     test('Get-request rootiin', (done) => {
       request(app).get('/').set('Accept', 'text/html')
       .expect(200)
       .then(response => {
-        // Assert other desired stuff
+        
         done();
       });
     });

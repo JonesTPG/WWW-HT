@@ -1,4 +1,7 @@
 'use strict'
+
+/* Tietokanta-skeema yksittäiselle kysymykselle, sisältää luonnollisesti 
+   kaiken yksittäiseen kysymykseen liittyvän datan */
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 

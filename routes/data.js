@@ -1,5 +1,9 @@
 'use strict'
 
+/*Express Router Root: /data
+  Tehtävä: Palauttaa front-endiin json-muodossa kaikki tulokset
+  */
+
 var express = require('express');
 var router = express.Router();
 var path = require('path');
@@ -8,7 +12,7 @@ var QuizItem = require('../models/quizItem');
 var Result = require('../models/result');
 
 
-
+//haetaan tulokset tietokannasta ja palautetaan ne jsonina
 router.get('/', function (req, res) {
 
     Result.find({})
@@ -19,6 +23,7 @@ router.get('/', function (req, res) {
     
 });
 
+//palauttaa sivun, jonne tulokset lopulta tulevat näkyviin
 router.get('/all', function (req, res) {
     res.sendFile(path.join(__dirname, '../public_data', 'data.html'));
 });

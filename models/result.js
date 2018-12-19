@@ -1,4 +1,9 @@
 'use strict'
+
+
+/* Tulos-objekti, sisältää neljä listaa, joissa tietoja quizissa esiintyvistä kysymyksistä
+   sekä vastaukset kolmessa eri muodossa. Lisäksi sisältää metadataa kuten päivämäärän. */
+
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 

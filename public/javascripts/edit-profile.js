@@ -1,6 +1,4 @@
-
-
-
+'use strict'
 
 var app = new Vue({
     
@@ -17,19 +15,22 @@ var app = new Vue({
 
      created: function () {
         
+        //haetaan back-endiltä senhetkinen käyttäjädata
         axios.get('http://localhost:3000/userdata').then((response)=> {
                     data = JSON.parse(response.data);
                     this.username = data.username;
                     this.age = data.age;
                     this.email = data.email;
                   
-
                 });
      
      },
   
   
     methods: {
+
+      //tarkistetaan, että uudet tiedot on laitettu, ja lähetetään tiedot sitten backendille, joka
+      //päivittää tiedot
 
       postForm() {
           if (this.email.length == 0 || !this.email.includes("@")) {
@@ -61,12 +62,11 @@ var app = new Vue({
 
 
       },
+
+      //apufunktio
       IsNumeric(val) {
-      return Number(parseFloat(val)) === val;
+          return Number(parseFloat(val)) === val;
       }
-
-
-
     }
   });
   

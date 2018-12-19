@@ -1,10 +1,13 @@
 'use strict'
 
-var timer;
+//quiz-sivun Vue-komponentti, käyttäjän vastaukset talletetaan listaan ja lähetetään lopulta serverille
+//tarkistettavaksi. Tämän jälkeen käyttäjä ohjataan tulossivulle.
 
+
+
+var timer; //globaali pistemuuttuja, näkyy myös Vue-komponentille.
+// funktio, joka näyttää käyttäjälle laskurin mikä kuvaa quizin pistemäärää.
 function timer() {
-
-
     timer = 1000;
     var interval = setInterval(function() {
         timer--;
@@ -17,12 +20,12 @@ function timer() {
     
 }
 
+
+//palauttaa laskurin arvon. Funktiota kutsutaan siloin kun käyttäjä ilmoittaa olevansa
+//valmis siirtymään eteenpäin.
 function getTime() {
     return timer;
 }
-
-
-
 
 var app = new Vue({
     
@@ -33,7 +36,7 @@ var app = new Vue({
         genre: null,
         amount: null,
         user: null,
-        cur: {
+        cur: { //sisältää senhetkisen kysymyksen tiedot
             question: null,
             options: [],
             hint: null,
@@ -56,23 +59,28 @@ var app = new Vue({
         console.log(url);
         var urlObj = new URL(url);
        
-        this.genre = urlObj.searchParams.get("genre");
-        this.amount = urlObj.searchParams.get("amount");
-        //this.user = urlObj.searchParams.get("user");
-
+        //huom! koska käytössä on url-parametrit, quiz-linkin avulla voidaan aloittaa uusi quiz
+        //kirjoittamalla oikea url. (mahdollistaa esim. tietyn quizin jakamisen)
+        this.genre = urlObj.searchParams.get("genre"); //url-parametri
+        this.amount = urlObj.searchParams.get("amount"); // url-parametri
+        
         var data = {
             genre: this.genre,
             amount: this.amount,
         }
 
+        //lähetetään parametrien perusteella pyyntö serverille.
+        //vastauksena saadaan randomisoidut kysymykset
         axios.post('http://localhost:3000/quiz/get-questions', data).then((response)=> {
                 var data = JSON.parse(response.data);
-                console.log(data)
+              
+                //jos vastauksena saatiin {error: true}, niin redirectataan käyttäjä
+                //valitsemaan asetukset uudestaan
                 if (data == true) {
-                    console.log("redirect")
-                    window.location.href = 'http://localhost:3000/quiz/start?error=true';
+                   window.location.href = 'http://localhost:3000/quiz/start?error=true';
                     return;
                 }
+                //muuten valmistellaan ensimmäinen kysymys
                 this.questionList = data;
 
                 var firstq = data[0];
@@ -81,13 +89,14 @@ var app = new Vue({
                 this.cur.options[1] = firstq.option1;
                 this.cur.options[2] = firstq.option2;
 
+                //sekoitetaan vaihtoehdot, sama funktio kuin serverilläkin.
                 this.cur.options = this.shuffle(this.cur.options);
 
 
                 this.cur.hint = firstq.hint;
                 this.cur.imgUrl = firstq.imageUrl;
 
-                console.log(firstq)
+               
                 
         });
 
@@ -99,6 +108,8 @@ var app = new Vue({
   
   
     methods: {
+        //metodi, joka tallentaa senhetkisen vastauksen, sekä metadatan "answerdata"-listaan.
+        //sen jälkeen käyttäjälle näytetään seuraava kysymys.
         saveAnswerAndNext() {
 
             if (this.answer==null) {
@@ -117,6 +128,9 @@ var app = new Vue({
                 
             }
 
+            //tarkistukset tehty, tallennetaan vastaus listaan ja näytetään
+            //käyttäjälle seuraava kysymys.
+
             this.answerdata[this.qNumber] = {question: this.questionList[this.qNumber].question, answer: this.answer, score: this.score};
             
             this.qNumber++;
@@ -128,7 +142,7 @@ var app = new Vue({
             this.cur.options[1] = nextq.option1;
             this.cur.options[2] = nextq.option2;
 
-           this.cur.options = this.shuffle(this.cur.options);
+            this.cur.options = this.shuffle(this.cur.options);
 
             this.cur.hint = nextq.hint;
             this.cur.imgUrl = nextq.imageUrl;
@@ -139,7 +153,7 @@ var app = new Vue({
             
         },
 
-       
+        //vihjeen painaminen vähentää 200 pistettä.
 
         showhint() {
             if (this.showHint == false) {
@@ -154,6 +168,8 @@ var app = new Vue({
             }
         },
 
+
+        //metodi, joka muodostaa answerdata-listasta sekä muusta datasta objektin
         submitQuiz() {
 
             if (this.answer == null) {
@@ -174,13 +190,14 @@ var app = new Vue({
             
             this.infoText = "";
 
-
+            //pakataan data post-requestia varten
             var data = {
                 answerdata: this.answerdata,
                 amount: this.amount,
                 genre: this.genre
             }
-    
+            // lähetetään tiedot serverille. Serveri palauttaa tallennetun result-dokumentin id:n. Ohjataan
+            // käyttäjä tulossivulle, ja laitetaan resultin id url-parametriksi.
             axios.post('http://localhost:3000/quiz/save-results', data).then((response)=> {
                     
                     var data = JSON.parse(response.data);

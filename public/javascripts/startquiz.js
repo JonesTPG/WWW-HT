@@ -1,12 +1,10 @@
 'use strict'
 
-var selectedgenre;
+var selectedgenre; //globaali muuttuja valitulle genrelle, myös toiset komponentit pääsevät käsiksi
 
-
+//komponentti, joka näyttää yksittäisen genre-itemin materialize.css:n collectionissa
 Vue.component('genreItem', {
     props: ['item'],
-    
-
     methods: {
         updateSelected(name) {
             selectedgenre = name;
@@ -38,7 +36,7 @@ Vue.component('genreItem', {
         `
   });
 
-
+//näyttää materialize.css dropdown valikon kysymysten määrillä
 Vue.component('questionAmount', {
     data() {
         return {
@@ -67,11 +65,7 @@ Vue.component('questionAmount', {
             }
             else {
                 this.error = false;
-                //var data = {genre: selectedgenre, amount: this.selected};
-                
-                // axios.get('http://localhost:3000/quiz/startquiz?genre='+ selectedgenre + '&amount='+ this.selected).then((response)=> {
-                   
-                // })
+                //käyttäjä on valinnut asetukset, viedään asetukset url-parametreina eteenpäin
                 window.location.href = "http://localhost:3000/quiz/startquiz?genre="+ selectedgenre + "&amount="+ this.selected;
                 
             }
@@ -127,12 +121,14 @@ var app = new Vue({
         console.log(url);
         var urlObj = new URL(url);
 
+        //jos url-parametrina on error, ilmoitetaan siitä käyttäjälle. errori on peräisin siitä,
+        //että tietokannasta ei ole löytynyt tarpeeksi kysymyksiä valitus genrestä
         this.error = urlObj.searchParams.get("error");
         if (this.error) {
             this.infoText = "Quizia ei voida aloittaa, koska genressä ei ole tarpeeksi kysymyksiä";
         }
 
-
+        // haetaan genret serveriltä
         axios.get('http://localhost:3000/quiz/genres').then((response)=> {
                 var data = JSON.parse(response.data);
                 this.genreList = data;
@@ -141,13 +137,6 @@ var app = new Vue({
      
      },
   
-  
-    methods: {
-        startQuiz() {
-            console.log(selectedgenre);
-            
-        }
-    }
     
   });
   

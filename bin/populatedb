@@ -25,8 +25,7 @@ var genres = []
 function genreCreate(name, questionAmount, imageUrl, cb) {
     genredetail = {name:name , questionAmount: questionAmount, 
                     imageUrl: imageUrl }
-    // if (imageUrl != false) authordetail.date_of_birth = imageUrl
-    // if (d_death != false) authordetail.date_of_death = d_death
+   
     
     var genre = new Genre(genredetail);
          
@@ -44,8 +43,7 @@ function genreCreate(name, questionAmount, imageUrl, cb) {
   function quizItemCreate(question, answer, option1, option2, imageUrl, hint, difficulty, genre, genreName, cb) {
     quizItemDetail = {question:question , answer: answer, option1: option1, option2: option2, hint: hint,
                     imageUrl: imageUrl, difficulty:difficulty, genre:genre, genreName: genreName }
-    // if (imageUrl != false) authordetail.date_of_birth = imageUrl
-    // if (d_death != false) authordetail.date_of_death = d_death
+    
     
     var quizitem = new QuizItem(quizItemDetail);
          
