@@ -15,7 +15,7 @@ var Result = require('../models/result');
 
 //ei varsinaista merkitystä, pidetään kuitenkin route ylhäällä yksikkötestejä varten.
 router.get('/', function (req, res) {
-    res.send('Quiz-router');
+    res.status(200).send('Quiz-router');
   });
 
 

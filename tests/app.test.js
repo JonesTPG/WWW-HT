@@ -44,3 +44,15 @@ describe('Testataan kirjautumissivu', () => {
   
   });
 
+  describe('Testataan quiz-router', () => {
+    test('Get-request /quiz', (done) => {
+      request(app).get('/quiz').set('Accept', 'text/html')
+      .expect(200)
+      .then(response => {
+        // Assert other desired stuff
+        done();
+      });
+    });
+  
+  });
+
