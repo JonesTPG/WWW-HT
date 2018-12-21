@@ -10,7 +10,7 @@ var Genre = require('../models/genre')
 
 
 var mongoose = require('mongoose');
-var mongoURL = 'mongodb://localhost:27017/HT';
+var mongoURL = 'mongodb://mongo:27018';
 mongoose.connect(mongoURL);
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
@@ -79,35 +79,35 @@ function genreCreate(name, questionAmount, imageUrl, cb) {
     async.parallel([
         function(callback) {
               quizItemCreate('Paljon on 1+1', "2", "3", "1", "../images/quiz/default.jpg",
-               "suattaapi olla 2", "easy", genres[1], "Matematiikka", callback);
+               "saattaa olla 2", "easy", genres[1], "Matematiikka", callback);
         },
         function(callback) {
             quizItemCreate('Paljon on 2+3', "5", "6", "7", "../images/quiz/default.jpg",
-             "suattaapi olla 5", "medium", genres[1], "Matematiikka", callback);
+             "saattaa olla 5", "medium", genres[1], "Matematiikka", callback);
         },
         function(callback) {
             quizItemCreate('Paljon on 2+4', "6", "3", "9", "../images/quiz/default.jpg",
-             "suattaapi olla 6", "medium", genres[1], "Matematiikka", callback);
+             "saattaa olla 6", "medium", genres[1], "Matematiikka", callback);
         },
         function(callback) {
             quizItemCreate('Paljon on 234+3', "237", "273", "243", "../images/quiz/default.jpg",
-             "suattaapi olla 237", "medium", genres[1], "Matematiikka", callback);
+             "saattaa olla 237", "medium", genres[1], "Matematiikka", callback);
         },
         function(callback) {
             quizItemCreate('Paljon on 245+3', "248", "251", "247", "../images/quiz/default.jpg",
-             "suattaapi olla 248", "medium", genres[1], "Matematiikka", callback);
+             "saattaa olla 248", "medium", genres[1], "Matematiikka", callback);
         },
         function(callback) {
             quizItemCreate('Paljon on 2+2343', "2345", "2545", "2536", "../images/quiz/default.jpg",
-             "suattaapi olla 2345", "medium", genres[1], "Matematiikka", callback);
+             "saattaa olla 2345", "medium", genres[1], "Matematiikka", callback);
         },
         function(callback) {
             quizItemCreate('Paljon on 2234+13', "2247", "2254", "2258", "../images/quiz/default.jpg",
-             "suattaapi olla 2247", "medium", genres[1], "Matematiikka", callback);
+             "saattaa olla 2247", "medium", genres[1], "Matematiikka", callback);
         },
         function(callback) {
             quizItemCreate('Paljon on 2+45', "47", "51", "41", "../images/quiz/default.jpg",
-             "suattaapi olla 47", "medium", genres[1],"Matematiikka", callback);
+             "saattaa olla 47", "medium", genres[1],"Matematiikka", callback);
         }
         
     ],
