@@ -55,7 +55,7 @@ app.post('/update-profile', isLoggedIn, (req, res) => {
 
   //req.user sisältää kirjautuneen käyttäjän tiedot, sen avulla päivitetään tietokanta
   User.findOne( {'local.username': req.user.local.username}, function (err, doc) {
-    
+    console.log(doc)
     doc.local.email = email;
     doc.local.age = age;
     doc.save(function (err) {

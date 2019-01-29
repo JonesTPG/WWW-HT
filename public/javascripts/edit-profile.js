@@ -17,7 +17,7 @@ var app = new Vue({
         
         //haetaan back-endiltä senhetkinen käyttäjädata
         axios.get('http://localhost:3000/userdata').then((response)=> {
-                    data = JSON.parse(response.data);
+                    var data = JSON.parse(response.data);
                     this.username = data.username;
                     this.age = data.age;
                     this.email = data.email;
@@ -56,10 +56,6 @@ var app = new Vue({
           
 
         });
-
-
-
-
 
       },
 
